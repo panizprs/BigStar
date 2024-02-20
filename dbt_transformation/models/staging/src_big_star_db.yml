@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: raw_data # name of dataset in bigquery
+    database: big-star-collectibles-414617 # name of project in bigquery
+    schema: raw_data # name of dataset in the project
+    freshness: # freshness to warn about the old data
+      warn_after: { count: 24, period: hour }
+    loaded_at_field: "_airbyte_extracted_at" # _airbyte_normalized_at
+    tables:
+      - name: customers
+      - name: orders
+      - name: products
+      - name: order_items
