@@ -1,9 +1,14 @@
 version: 2
 
 sources:
-  - name: raw_data # name of dataset in bigquery
-    database: big-star-collectibles-414617 # name of project in bigquery
-    schema: raw_data # name of dataset in the project
+#  bigquery source:
+#  - name: raw_data # source name to use in SQL queries.
+#    database: big-star-collectibles-414617 # name of project in bigquery
+#    schema: raw_data # name of dataset in the project
+# snowflake source:
+  - name: raw_data # source name to use in SQL queries.
+    database: "{{ env_var('SNOWFLAKE_SRC_DATABASE', '') }}" # name of database in snowflake
+    schema: "{{ env_var('SNOWFLAKE_SRC_SCHEMA', '') }}" # name of SCHEMA in snowflake
     freshness: # freshness to warn about the old data
       warn_after: { count: 24, period: hour }
     loaded_at_field: "_airbyte_extracted_at" # _airbyte_normalized_at
