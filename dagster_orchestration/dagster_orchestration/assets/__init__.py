@@ -14,7 +14,7 @@ resources = {
         port="8000",
         # If using basic auth, include username and password:
         username="airbyte",
-        password=os.getenv("AIRBYTE_PASSWORD")
+        password=os.getenv("AIRBYTE_PASSWORD") # "password": {"env": "AIRBYTE_PASSWORD"},
     )
 }
 
@@ -23,4 +23,6 @@ dbt_assets = load_assets_from_dbt_project(
 )
 
 airbyte_assets = load_assets_from_airbyte_instance(
-    resources.get("airbyte_instance"), key_prefix=["raw_data"])
+    resources.get("airbyte_instance"), key_prefix=["raw_data"],
+    connection_filter=lambda meta: meta.name=="Big Star Postgres → Snowflake",)
+    # connection_filter=lambda meta: "snowflake" in meta.name,)
